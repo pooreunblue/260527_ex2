@@ -1,0 +1,326 @@
+:root {
+  /* Colors from DESIGN.md text description */
+  --bg-page: #050505;
+  --bg-surface: #131313;
+  --primary: #39FF14;
+  --secondary: #00F3FF;
+  --tertiary: #FF0055;
+  --on-surface: #e5e2e1;
+  --on-primary: #053900;
+  --on-secondary: #00373a;
+  --on-tertiary: #67001d;
+  
+  /* Typography */
+  --font-terminal: 'JetBrains Mono', monospace;
+  --font-label: 'Space Mono', monospace;
+  
+  /* Spacing */
+  --unit: 4px;
+  --gutter: 1rem;
+  --terminal-margin: 2rem;
+  --container-max: 1000px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--on-surface);
+  font-family: var(--font-terminal);
+  line-height: 1.6;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.terminal-container {
+  position: relative;
+  max-width: var(--container-max);
+  margin: var(--terminal-margin) auto;
+  height: calc(100vh - var(--terminal-margin) * 2);
+  border: 2px solid var(--primary);
+  border-radius: 0;
+  overflow: hidden;
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--gutter);
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--outline);
+}
+
+.terminal-header h1 {
+  font-family: var(--font-terminal);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.terminal-status {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--on-surface-variant);
+  background-color: rgba(57, 255, 20, 0.1);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--primary);
+}
+
+.terminal-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-output {
+  flex: 1;
+  padding: var(--gutter);
+  overflow-y: auto;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  background-color: var(--bg-surface);
+  position: relative;
+}
+
+.terminal-output::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 49px,
+      rgba(57, 255, 20, 0.05) 50px,
+      rgba(57, 255, 20, 0.05) 51px
+    );
+  pointer-events: none;
+}
+
+.terminal-output p {
+  margin-bottom: var(--gutter);
+  line-height: 1.8;
+}
+
+.terminal-output .prompt {
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+.terminal-output .user-input {
+  color: var(--on-surface);
+  font-weight: 500;
+}
+
+.terminal-output .system-message {
+  color: var(--secondary);
+  font-style: italic;
+}
+
+.terminal-output .error-message {
+  color: var(--tertiary);
+  font-weight: 600;
+}
+
+.terminal-output .success-message {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.terminal-input {
+  display: flex;
+  align-items: center;
+  padding: var(--gutter);
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--outline);
+}
+
+.terminal-input .prompt {
+  font-family: var(--font-terminal);
+  font-size: 1.125rem;
+  color: var(--primary);
+  margin-right: 0.75rem;
+  min-width: 1.5rem;
+}
+
+.terminal-input input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--on-surface);
+  font-family: var(--font-terminal);
+  font-size: 1.125rem;
+  outline: none;
+}
+
+.terminal-input input::placeholder {
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+}
+
+/* Scanlines overlay */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 3px
+    );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Glitch effect */
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0 0 0 var(--primary);
+  }
+  20% {
+    text-shadow: -2px 0 var(--secondary), 2px 0 var(--tertiary);
+  }
+  40% {
+    text-shadow: 2px 0 var(--secondary), -2px 0 var(--tertiary);
+  }
+  60% {
+    text-shadow: -2px 0 var(--tertiary), 2px 0 var(--secondary);
+  }
+  80% {
+    text-shadow: 2px 0 var(--secondary), -2px 0 var(--tertiary);
+  }
+  100% {
+    text-shadow: 0 0 0 var(--primary);
+  }
+}
+
+/* Cursor blink */
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Status chips */
+.status-chip {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid;
+  margin-right: 0.5rem;
+}
+
+.status-chip.scanning {
+  color: var(--secondary);
+  border-color: var(--secondary);
+  background-color: rgba(0, 243, 255, 0.1);
+  animation: scan 2s infinite;
+}
+
+@keyframes scan {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+/* Progress bar */
+.progress-bar {
+  display: inline-block;
+  width: 10rem;
+  height: 1rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--primary);
+  margin: 0.5rem 0;
+  overflow: hidden;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  color: var(--on-surface);
+}
+
+.progress-bar div {
+  height: 100%;
+  background-color: var(--primary);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* Inventory grid */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+  gap: var(--gutter);
+  margin: var(--gutter) 0;
+}
+
+.inventory-item {
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--secondary);
+  background-color: rgba(0, 243, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .terminal-container {
+    margin: 0;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+  }
+  
+  .terminal-header {
+    display: none;
+  }
+  
+  .terminal-input {
+    padding: 1rem;
+  }
+  
+  .terminal-output {
+    padding: 1rem;
+    height: calc(100vh - 3rem);
+  }
+}

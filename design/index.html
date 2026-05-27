@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Horizon Terminal - 텍스트 기반 인터랙티브 방탈출 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <h1>EVENT HORIZON TERMINAL</h1>
+            <div class="terminal-status">SYSTEM ONLINE</div>
+        </div>
+        <div class="terminal-screen">
+            <div id="terminal-output" class="terminal-output">
+                <!-- Game output will be inserted here -->
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">></span>
+                <input type="text" id="terminal-input" autocomplete="off" autofocus>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
